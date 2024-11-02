@@ -145,3 +145,52 @@ exports.getproductbyid =  (req, res) => {
         });
     }
 };
+
+exports.updateProduct = (req, res) => {
+    try {
+        const { id ,title, description, customdesc, price, categoryid, is_active, brand, quantity, discount_price, status, shipping_cost, tags } = req.body;
+        
+        const mainImage = req.files.images ? req.files.images.map(file => file.filename) : [];
+        const image = JSON.stringify(mainImage);
+        const additionalImages = req.files.main_img ? req.files.main_img[0].filename : null;
+        
+        // Validate required fields
+        if (id && title && description && price && categoryid && shipping_cost && quantity) {
+            const sql = `UPDATE products SET 
+                title = ?, 
+                short_des = ?, 
+                customdesc = ?, 
+                price = ?, 
+                categoryid = ?, 
+               
+                is_active = ?, 
+                brand = ?, 
+                quantity = ?, 
+                discount_price = ?, 
+                status = ?, 
+                shipping_cost = ?, 
+                tags = ? 
+                WHERE id = ${id}`;
+
+            const values = [title, description, customdesc, price, categoryid,  is_active, brand, quantity, discount_price, status, shipping_cost, tags];
+
+            // Execute the SQL query
+            conn.query(sql, values, (err, result) => {
+                if (err) {
+                    console.error('Error updating product:', err);
+                    return res.status(500).json({ error: 'Database error' });
+                }
+                res.status(200).json({ message: 'Product updated successfully' });
+                // console.log(result);
+            });
+        } else {
+            return res.status(400).json({
+                error: 'All the following fields are required: id, title, description, price, categoryid, shipping_cost, quantity'
+            });
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return res.status(500).json({ error: 'Server error' });
+    }
+};
+
