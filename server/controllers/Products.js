@@ -106,3 +106,42 @@ exports.deleteProduct = (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+
+exports.getproductbyid =  (req, res) => {
+    try {
+        const { id } = req.params;
+        if (id) {
+            const validateIdQuery = 'SELECT * FROM products WHERE id = ?';
+            conn.query(validateIdQuery, [id], (error, result) => {
+                if (error) {
+                    console.error(error);
+                    return res.status(500).json({
+                        message: "Error fetching product",
+                        responsecode: 0
+                    });
+                }
+
+                if (result.length > 0) {
+                    return res.status(200).json({ singleProduct: result[0] });
+                } else {
+                    return res.status(404).json({
+                        message: "Product not found",
+                        responsecode: 0
+                    });
+                }
+            });
+        } else {
+            return res.status(400).json({
+                message: "Product ID is required",
+                responsecode: 0
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Internal server error",
+            responsecode: 0
+        });
+    }
+};
