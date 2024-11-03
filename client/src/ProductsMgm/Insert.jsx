@@ -65,7 +65,12 @@ function Insert() {
     
         const url = 'http://localhost:3000/api/v1/addproducts';
         const response = await axios.post(url, formData);
-        console.log('Data inserted:', response.data);
+        console.log('Data inserted:', response.data).then(function(response){
+           console.log(response.data);
+           alert('data inserted');
+        }).catch(function(error){
+            console.log(error);
+        })
     }
     
     return (
@@ -97,7 +102,7 @@ function Insert() {
                 <Inp label='Shipping Cost' name='shipping_cost' value={productdata.shipping_cost} onchange={(e) => setpd({ ...productdata, shipping_cost: e.target.value })} className='mb-3' />
                 
                 <Inp label='Tags' name='tags' value={productdata.tags} onchange={(e) => setpd({ ...productdata, tags: e.target.value })} className='mb-3' />
-                <button type='button' onClick={inserdata}>submit</button>
+                <button className='bg-blend-darken' type='button' onClick={inserdata}>submit</button>
             </div>
         </>
     );

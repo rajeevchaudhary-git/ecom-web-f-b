@@ -5,6 +5,7 @@ import Insert from './ProductsMgm/Insert';
 import Viewproduct from './ProductsMgm/Viewproduct';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import EditProduct from './ProductsMgm/EditProduct';
+import Addcategory from './components/category/Addcategory';
 
 function App() {
 const router = createBrowserRouter([
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path:'/edit/:id',
     element:<EditProduct/>
+  },
+  {
+    path:'/addcategories',
+    element:<Addcategory/>
   }
 ])
 

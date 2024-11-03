@@ -38,6 +38,7 @@ const upload = multer({ storage: storage,
 
 // export controller here 
 const {updateProduct,getallproducts,addproduct,deleteProduct,getproductbyid} = require("../controllers/Products");
+const {addcategory} = require("../controllers/addcategory");
 
 productroute.get('/get-products',getallproducts);
 
@@ -45,6 +46,7 @@ productroute.post('/addproducts',upload, addproduct);
 productroute.get('/deleteProduct/:id', deleteProduct);
 productroute.get('/get-productbyid/:id', getproductbyid);
 productroute.post('/update',upload, updateProduct);
+productroute.post('/addcategory', addcategory);
 
 
 module.exports = productroute;
