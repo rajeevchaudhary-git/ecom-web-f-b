@@ -52,3 +52,88 @@ exports.addcategory =(req,res)=>{
         });
     }
 }
+
+exports.deletecat = (req,res)=>{
+    try {
+        const { id } = req.params;
+        if(id){
+            const querydel = `delete from category where id=${id}`;
+            conn.query(querydel,(error,result)=>{
+                if(result){
+                    return res.status(200).json({
+                        message:"deleted sucessfully",
+                        responsecode:1
+                    })
+                }
+                else{
+                    return res.status(400).json({
+                        message:"error in deleting",
+                        responsecode:0
+                    })
+                }
+            })
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message:"server error",
+            error:error,
+            responsecode:0
+        })
+    }
+}
+exports.fetchallcat = (req,res)=>{
+    try {
+        const queryfetch = 'select * from category';
+        conn.query(queryfetch,(error,result)=>{
+            if(result){
+                return res.status(200).json({
+                    data:result,
+                    responsecode:1
+                });
+            }
+            else{
+                return res.status(400).json({
+                    message:"error in fetching data",
+                    responsecode:0
+                })
+            }
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message:"server error",
+            error:error,
+            responsecode:0
+        })
+    }
+}
+
+exports.singlcat =(req,res)=>{
+    try {
+        const {id}= req.params;
+        const fetchsingle = `select * from category where id =${id}`;
+        conn.query(fetchsingle,(error,result)=>{
+            if(result[0]!=null){
+                return res.status(200).json({
+                    data:result[0],
+                    responsecode:1
+                });
+            }
+            else{
+                return res.status(400).json({
+                    message:"error in fetching data and invalid id ",
+                    responsecode:0
+                })
+            }
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message:"server error",
+            error:error,
+            responsecode:0
+        })
+    }
+}
+
+exports.upadtecat = ()=>{
+    // todo
+}
