@@ -6,6 +6,7 @@ import Viewproduct from './ProductsMgm/Viewproduct';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import EditProduct from './ProductsMgm/EditProduct';
 import Addcategory from './components/category/Addcategory';
+import ListCategory from './components/category/ListCategory';
 
 function App() {
 const router = createBrowserRouter([
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path:'/addcategories',
     element:<Addcategory/>
+  },
+  {
+    path:'/listcat',
+    element:<ListCategory/>
   }
 ])
 
