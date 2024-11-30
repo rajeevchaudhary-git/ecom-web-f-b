@@ -194,3 +194,32 @@ exports.updateProduct = (req, res) => {
     }
 };
 
+
+exports.getProductBySlug = (req, res) => {
+    try {
+        // Extracting the slug from route parameters
+        const { slug } = req.params;
+
+        // Validate if the slug exists in the database
+        const validateSlugQuery = 'SELECT * FROM products WHERE slug = ?';
+        conn.query(validateSlugQuery, [slug], (error, result) => {
+            if (error) {
+                console.error('Error fetching product by slug:', error);
+                return res.status(500).json({ error: 'Database error while fetching product by slug' });
+            }
+
+            if (result.length > 0) {
+                // If the product exists, return the product details
+                return res.status(200).json({ product: result[0] });
+            } else {
+                // If no product is found with the given slug
+                return res.status(404).json({ message: 'Product not found with the given slug' });
+            }
+        });
+    } catch (error) {
+        console.error('Server error:', error);
+        return res.status(500).json({ message: 'Server error while fetching product by slug' });
+    }
+};
+
+

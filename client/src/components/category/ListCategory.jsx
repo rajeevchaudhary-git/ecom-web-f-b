@@ -10,12 +10,14 @@ function ListCategory() {
             setcat(res.data.data);
         //    console.log(res);
     })  
-},[]);
+},[cat]);
 
 const handleDelete =(id)=>{
     const url = `http://localhost:3000/api/v1/deletecat/${id}`;
     axios.get(url).then((res)=>{
-        if(res)
+        if(res){
+            
+        }
     });
 }
 // console.log(cat);
