@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Home from './compoent/Home';
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import Cart from './compoent/Cart';
 
 function App() {
   const router = createBrowserRouter([
@@ -11,6 +12,10 @@ function App() {
     {
       path: '/home',
       element: <Home />,
+    },
+    {
+      path: '/cart',
+      element: <Cart/>,
     },
   ]);
 

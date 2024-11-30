@@ -1,40 +1,20 @@
 import React, { useState,useEffect } from 'react';
+import { useDispatch } from "react-redux";
+import { addToCart,removeFromCart } from '../Redux/cartSlice';
 import axios from 'axios';
 
 function Home() {
     const url = 'http://localhost:3000/api/v1/get-products';
     const base_url = `http://localhost:3000/uploads/`;
     const [products, setProducts] = useState(['']);
-    
- 
     const [categories, setCategories] = useState([]);
-
-        const [cart, setCart] = useState([]);
+    const dispatch = useDispatch();
     
-        // Function to add a product to the cart
-        const addToCart = (product) => {
-          // Retrieve the existing cart from session storage
-          const currentCart = JSON.parse(sessionStorage.getItem("cart")) || [];
-          // Check if the product is already in the cart
-          const isProductInCart = currentCart.find((item) => item.id === product.id);
-      
-          if (!isProductInCart) {
-            // Add the product to the cart
-            const updatedCart = [...currentCart, { ...product, quantity: 1 }];
-            sessionStorage.setItem("cart", JSON.stringify(updatedCart));
-            setCart(updatedCart);
-            alert(`${product.title} added to cart!`);
-          } else {
-            alert(`${product.title} is already in the cart!`);
-          }
-    
-      
-        // Load cart from sessionStorage on component mount
-        useEffect(() => {
-          const savedCart = JSON.parse(sessionStorage.getItem("cart")) || [];
-          setCart(savedCart);
-        }, []);
+    const handlecart = (product)=>{
+        dispatch(addToCart(product));
+        // console.log(product);
     }
+    
 
 
     useEffect(() => {
@@ -1073,7 +1053,7 @@ function Home() {
                 <div className="add-cart">
                   <button
                     className="add"
-                    onClick={() => addToCart(product)}
+                    onClick={() => handlecart(product)}
                     style={{
                       background: "none",
                       border: "none",
